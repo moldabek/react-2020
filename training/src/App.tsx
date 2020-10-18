@@ -20,13 +20,6 @@ const users: User[] = [
   }
 ];
 
-export enum AuthorizationPages {
-  Main,
-  Auth,
-  Registration,
-  Welcome
-}
-
 function App() {
   const [showedElement, setShowedElement] = useState(<></>);
 
@@ -35,7 +28,6 @@ function App() {
         <div className="buttons">
           <button onClick={() => showComponent(AuthorizationPages.Auth)}>Login</button>
           <button onClick={() => showComponent(AuthorizationPages.Registration)}>Sign Up</button>
-          <h1>Jojo</h1>
         </div>
 
         {showedElement}
@@ -73,28 +65,47 @@ function App() {
   }
 
   function createNewUser(user: User) {
+    // let regexEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
     if (users && user) {
       const checker = users.find((u) => u.email === user.email);
       if (checker) {
         return;
       }
-      user.id = users.length + 1;
-      users.push(user);
-      showComponent(AuthorizationPages.Auth);
+      if(user.name && user.email.search('@') && user.password.length >= 8){
+        user.id = users.length + 1;
+        users.push(user);
+        showComponent(AuthorizationPages.Auth);
+      }
+      else{
+        return <div>email is wrong</div>;
+      }
+
     }
   }
 
   function authenticateUser(user: User) {
     if (users && user) {
       console.log(user);
-      const checker = users.find(
-          (u) => u.email === user.email && u.password === user.password
-      );
-      if (checker) {
-        showComponent(AuthorizationPages.Welcome,checker);
+      if (user.email && user.password){
+        const checker = users.find(
+            (u) => u.email === user.email && u.password === user.password
+        );
+        if (checker) {
+          showComponent(AuthorizationPages.Welcome,checker);
+        }
+      }
+      else{
+        window.alert('you want to fill all forms')
       }
     }
   }
+}
+
+export enum AuthorizationPages {
+  Main,
+  Auth,
+  Registration,
+  Welcome
 }
 
 export default App;

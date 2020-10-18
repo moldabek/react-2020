@@ -7,11 +7,13 @@ interface Props {
     cancel: () => void;
 }
 
+
 export default function Registration({
                                       registrate,
                                          cancel,
                                      }: Props): ReactElement {
     let user: User = { email: "", id: 0, password: "", name: "" };
+
 
     return (
         <div>
@@ -46,4 +48,5 @@ export default function Registration({
             </div>
         </div>
     );
+
 }

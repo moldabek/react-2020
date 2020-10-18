@@ -15,10 +15,9 @@ export default function Field({label, onChange, type, required}: Props): ReactEl
     if (type) {
         inputType = type;
     }
-
     return (
         <div className="field">
-            <span>{label}</span>
+            <span>{label}</span>}
             <input type={inputType} onChange={onChange} required={required}/>
         </div>
 
